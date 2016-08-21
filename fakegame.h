@@ -9,10 +9,10 @@ void gameInitailize()
 {
     int i = 0, j = 0;
     int allMines = ALL_MINES;
-    //设置随机值
+    //脡猫脰脙脣忙禄煤脰碌
     srand((unsigned int)time(NULL));
 
-    //雷区地图初始化
+    //脌脳脟酶碌脴脥录鲁玫脢录禄炉
     for(i = 0; i < ROW; ++i)
     {
         for(j = 0; j < COLUMN; ++j)
@@ -22,7 +22,7 @@ void gameInitailize()
         }
     }
 
-    //放置惊天雷！
+    //路脜脰脙戮陋脤矛脌脳拢隆
     while(allMines)
     {
         i = rand() % ROW;
@@ -30,13 +30,13 @@ void gameInitailize()
 
         if(minesMap[i][j].minesNum == 0)
         {
-            //这个‘-1’就作为判断惊天雷的依据了
+            //脮芒赂枚隆庐-1隆炉戮脥脳梅脦陋脜脨露脧戮陋脤矛脌脳碌脛脪脌戮脻脕脣
             minesMap[i][j].minesNum = -1;
             --allMines;
         }
     }
 
-    //光标位置初始化
+    //鹿芒卤锚脦禄脰脙鲁玫脢录禄炉
     for(i = 0; i < ROW; ++i)
     {
         for(j = 0; j < COLUMN; ++j)
@@ -50,21 +50,21 @@ void gameInitailize()
 void countMines()
 {
     int i = 0, j = 0, m = 0, n = 0;
-    //以格子为中心周围的雷数
+    //脪脭赂帽脳脫脦陋脰脨脨脛脰脺脦搂碌脛脌脳脢媒
     int minesNum = 0;
 
     for(i = 0; i < ROW; ++i)
     {
         for(j = 0; j < COLUMN; ++j)
         {
-            //遇到惊天雷就放弃统计吧
+            //脫枚碌陆戮陋脤矛脌脳戮脥路脜脝煤脥鲁录脝掳脡
             if(minesMap[i][j].minesNum == -1)
                 continue;
             minesNum = 0;
-            //九宫格嘛，那3次好了
+            //戮脜鹿卢赂帽脗茂拢卢脛脟3麓脦潞脙脕脣
             for(m = -1; m <= 1; ++m)
             {
-                //行溢出了没，不能算没有的哦
+                //脨脨脪莽鲁枚脕脣脙禄拢卢虏禄脛脺脣茫脙禄脫脨碌脛脜露
                 if(i + m < 0 || i + m >= ROW)
                 {
                     continue;
@@ -72,12 +72,12 @@ void countMines()
 
                 for(n = -1; n <= 1; ++n)
                 {
-                    //这次就是看列溢出了没
+                    //脮芒麓脦戮脥脢脟驴麓脕脨脪莽鲁枚脕脣脙禄
                     if(j + n < 0 || j + n >= COLUMN)
                     {
                         continue;
                     }
-                    //周边有惊天雷赶紧加起来
+                    //脰脺卤脽脫脨戮陋脤矛脌脳赂脧陆么录脫脝冒脌麓
                     if(minesMap[i + m][j + n].minesNum == -1)
                     {
                         ++minesNum;
@@ -95,13 +95,13 @@ void keyBoardInput()
     int key1 = getch();
 
     /*****************************
-    测试之后才知道方向键两个字节
-    第一个字节ASCII 0x00e0 224
-    第二个字节分别是：
-    上：0x0048 72
-    下：0x0050 80
-    左：0x012b 75
-    右：0x012d 77
+    虏芒脢脭脰庐潞贸虏脜脰陋碌脌路陆脧貌录眉脕陆赂枚脳脰陆脷
+    碌脷脪禄赂枚脳脰陆脷ASCII 0x00e0 224
+    碌脷露镁赂枚脳脰陆脷路脰卤冒脢脟拢潞
+    脡脧拢潞0x0048 72
+    脧脗拢潞0x0050 80
+    脳贸拢潞0x012b 75
+    脫脪拢潞0x012d 77
     *****************************/
 
     if(key1 == 224)
@@ -143,8 +143,8 @@ void keyBoardInput()
             if(lose)
             {
                 setColor(13);
-                printf("|              诶哟,还差一点点哦！ ╥﹏╥                   |\n");
-                printf("|                 按\"r\"重玩，Esc不玩啦。                    |\n");
+                printf("|              脷脌脫麓,禄鹿虏卯脪禄碌茫碌茫脜露拢隆 篓i漏n篓i                   |\n");
+                printf("|                 掳麓\"r\"脰脴脥忙拢卢Esc虏禄脥忙脌虏隆拢                    |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
                 Sleep(1000);
@@ -152,27 +152,27 @@ void keyBoardInput()
 
                 if(key3 == 'r' || key3 == 'R')
                 {
-                    //重来，跟main中过程是一样的
+                    //脰脴脌麓拢卢赂煤main脰脨鹿媒鲁脤脢脟脪禄脩霉碌脛
                     setColor(10);
                     gameInitailize();
                     countMines();
                     printMap();
                 }
             }
-            //剩余的格子比雷还要多，可以继续玩
+            //脢拢脫脿碌脛赂帽脳脫卤脠脌脳禄鹿脪陋露脿拢卢驴脡脪脭录脤脨酶脥忙
             else if(leftBlocksNum > ALL_MINES)
             {
                 setColor(13);
-                printf("|                    哎哟，挺不错哦~ (￣0 ￣)               |\n");
+                printf("|                    掳楼脫麓拢卢脥娄虏禄麓铆脜露~ (拢镁0 拢镁)               |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
             }
-            //来到这你已经赢了
+            //脌麓碌陆脮芒脛茫脪脩戮颅脫庐脕脣
             else
             {
                 setColor(13);
-                printf("|                    哟，恭喜你赢了(/≧▽≦/)               |\n");
-                printf("|                  按\"r\"重玩，Esc就不玩啦。                 |\n");
+                printf("|                    脫麓拢卢鹿搂脧虏脛茫脫庐脕脣(/篓R篓艗篓Q/)               |\n");
+                printf("|                  掳麓\"r\"脰脴脥忙拢卢Esc戮脥虏禄脥忙脌虏隆拢                 |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
                 Sleep(1000);
@@ -191,7 +191,7 @@ void keyBoardInput()
 
         case ESC:
             system("cls");
-            gameOver("\t\t\t啦啦啦~很逗很扯吧~最后感谢你的玩耍呀（≧Д≦）\n\n\n\n\n\n\n\n");
+            gameOver("\t\t\t脌虏脌虏脌虏~潞脺露潞潞脺鲁露掳脡~脳卯潞贸赂脨脨禄脛茫碌脛脥忙脣拢脩陆拢篓篓R搂楼篓Q拢漏\n\n\n\n\n\n\n\n");
 
         default:
             break;
@@ -202,17 +202,17 @@ void keyBoardInput()
 
 void setCurPos(int y, int x)
 {
-    //在窗口缓冲中定义每个位置的状态
+    //脭脷麓掳驴脷禄潞鲁氓脰脨露篓脪氓脙驴赂枚脦禄脰脙碌脛脳麓脤卢
     COORD currentPosition;
     currentPosition.Y = y;
     currentPosition.X = x;
-    //所以现在的位置是在{y,x}
+    //脣霉脪脭脧脰脭脷碌脛脦禄脰脙脢脟脭脷{y,x}
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), currentPosition);
 }
 
 void moveCursor(int y, int x)
 {
-    //限定能走的地方
+    //脧脼露篓脛脺脳脽碌脛碌脴路陆
     if((x >= 0 && x < COLUMN) && (y >= 0 && y < ROW))
     {
         setCurPos(cursorPos[y][x].y, cursorPos[y][x].x);
@@ -225,32 +225,32 @@ bool checkResult(int y, int x)
 {
     int i = 0, j = 0;
 
-    //检测有没有溢出地图了
+    //录矛虏芒脫脨脙禄脫脨脪莽鲁枚碌脴脥录脕脣
     if(x < 0 || x >= COLUMN || y < 0 || y >= ROW)
     {
         return false;
     }
 
-    //就是你了！被选中的格子！
+    //戮脥脢脟脛茫脕脣拢隆卤禄脩隆脰脨碌脛赂帽脳脫拢隆
     minesMap[y][x].beCovered = false;
 
-    //被惊天雷炸了
+    //卤禄戮陋脤矛脌脳脮篓脕脣
     if(minesMap[y][x].minesNum == -1)
     {
         minesMap[y][x].minesNum = 9;
         return true;
     }
 
-    //如果没有雷，就当作空格吧
+    //脠莽鹿没脙禄脫脨脌脳拢卢戮脥碌卤脳梅驴脮赂帽掳脡
     if(minesMap[y][x].minesNum > 0 && minesMap[y][x].minesNum < 9)
     {
         return false;
     }
 
-    //九宫格，3x3咯
+    //戮脜鹿卢赂帽拢卢3x3驴漏
     for(i = -1; i <= 1; ++i)
     {
-        //检查一下在这一行溢出了没吧
+        //录矛虏茅脪禄脧脗脭脷脮芒脪禄脨脨脪莽鲁枚脕脣脙禄掳脡
         if(y + i < 0 || y + i >= ROW)
         {
             continue;
@@ -258,12 +258,12 @@ bool checkResult(int y, int x)
 
         for(j = -1; j <= 1; ++j)
         {
-            //这次就到列了吧
+            //脮芒麓脦戮脥碌陆脕脨脕脣掳脡
             if(x + j < 0 || x + j >= COLUMN)
             {
                 continue;
             }
-            //如果下一个是没开过的，就检查它吧
+            //脠莽鹿没脧脗脪禄赂枚脢脟脙禄驴陋鹿媒碌脛拢卢戮脥录矛虏茅脣眉掳脡
             if(minesMap[y + i][x + j].beCovered)
             {
                 minesMap[y + i][x + j].beCovered = false;
@@ -278,12 +278,12 @@ bool checkResult(int y, int x)
 void printMap()
 {
     system("cls");
-    char help0[] = "←↑↓→";
-    char help1[] = "动啊";
+    char help0[] = "隆没隆眉隆媒隆煤";
+    char help1[] = "露炉掳隆";
     char help2[] = "Space / Enter";
-    char help3[] = "点击啊";
-    char help4[] = "Esc 不玩啦";
-    //因为要输出提示，所以地图不能太大了，10x10就差不多了
+    char help3[] = "碌茫禄梅掳隆";
+    char help4[] = "Esc 虏禄脥忙脌虏";
+    //脪貌脦陋脪陋脢盲鲁枚脤谩脢戮拢卢脣霉脪脭碌脴脥录虏禄脛脺脤芦麓贸脕脣拢卢10x10戮脥虏卯虏禄露脿脕脣
     setColor(14);
     setCurPos(4, 62);
     printf("%s", help0);
@@ -301,7 +301,7 @@ void printMap()
     int i = 0, j = 0, k = 0;
     leftBlocksNum = 0;
     setColor(11);
-    printf("[开]--");
+    printf("[驴陋]--");
     setColor(10);
 
     for(k = 1; k < COLUMN - 1; ++k)
@@ -309,7 +309,7 @@ void printMap()
         printf("+-----");
     }
     setColor(11);
-    printf("+--[心]\n");
+    printf("+--[脨脛]\n");
     setColor(10);
 
     for(i = 0; i < ROW; ++i)
@@ -319,8 +319,8 @@ void printMap()
             if(minesMap[i][j].beCovered)
             {
                 ++leftBlocksNum;
-                //这个输出的就是格子被覆盖的时候输出的图形，可以换成1-6试试
-                //1-4是正方形的4个角，5-6是双竖线和双横线
+                //脮芒赂枚脢盲鲁枚碌脛戮脥脢脟赂帽脳脫卤禄赂虏赂脟碌脛脢卤潞貌脢盲鲁枚碌脛脥录脨脦拢卢驴脡脪脭禄禄鲁脡1-6脢脭脢脭
+                //1-4脢脟脮媒路陆脨脦碌脛4赂枚陆脟拢卢5-6脢脟脣芦脢煤脧脽潞脥脣芦潞谩脧脽
                 printf("|  %c  ", 3);
             }
             else if(minesMap[i][j].minesNum == -1 || minesMap[i][j].minesNum == 9)
@@ -350,7 +350,7 @@ void printMap()
         }
     }
     setColor(11);
-    printf("[就]--");
+    printf("[戮脥]--");
     setColor(10);
 
     for(k = 1; k < COLUMN - 1; ++k)
@@ -358,27 +358,27 @@ void printMap()
         printf("+-----");
     }
     setColor(11);
-    printf("+--[好]\n");
+    printf("+--[潞脙]\n");
     setColor(10);
 }
 
 void delLine(int y)
 {
     HANDLE hOutput;
-    //窗口缓存信息
+    //麓掳驴脷禄潞麓忙脨脜脧垄
     CONSOLE_SCREEN_BUFFER_INFO sbi;
     DWORD len, nw;
-    //用MSDN上的TCHAR类型跪了，换成char就好
+    //脫脙MSDN脡脧碌脛TCHAR脌脿脨脥鹿貌脕脣拢卢禄禄鲁脡char戮脥潞脙
     char fillchar = ' ';
-    //定位光标
+    //露篓脦禄鹿芒卤锚
     COORD startPosition = {0, y};
-    //获取输出句柄
+    //禄帽脠隆脢盲鲁枚戮盲卤煤
     hOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-    //获取窗口缓冲中的信息
+    //禄帽脠隆麓掳驴脷禄潞鲁氓脰脨碌脛脨脜脧垄
     GetConsoleScreenBufferInfo(hOutput, &sbi);
-    //窗口缓冲的位置，这里取得X值
+    //麓掳驴脷禄潞鲁氓碌脛脦禄脰脙拢卢脮芒脌茂脠隆碌脙X脰碌
     len = sbi.dwSize.X;
-    //从特定的位置用特定的字符去填充窗口的缓冲特定次数
-    //成功返回非0值，一般都成功，就不判断了
+    //麓脫脤脴露篓碌脛脦禄脰脙脫脙脤脴露篓碌脛脳脰路没脠楼脤卯鲁盲麓掳驴脷碌脛禄潞鲁氓脤脴露篓麓脦脢媒
+    //鲁脡鹿娄路碌禄脴路脟0脰碌拢卢脪禄掳茫露录鲁脡鹿娄拢卢戮脥虏禄脜脨露脧脕脣
     FillConsoleOutputCharacter(hOutput, fillchar, len, startPosition, &nw);
 }

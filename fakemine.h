@@ -57,24 +57,68 @@ int leftBlocksNum = ROW * COLUMN;
 int index_x = 0, index_y = 0;
 
 //设置窗口前后背景色
+/**
+ * [setColor description]
+ * @param color [description]
+ */
 void setColor(unsigned short color);
 //开头的欢迎“动画”
+/**
+ * [welcomeToMyGame description]
+ */
 void welcomeToMyGame();
 //游戏地图初始化
+/**
+ * [gameInitailize description]
+ */
 void gameInitailize();
 //以某格子为中心计算惊天雷数量
+/**
+ * [countMines description]
+ */
 void countMines();
 //获取键盘的输入
+/**
+ * [keyBoardInput description]
+ */
 void keyBoardInput();
 //指定光标的位置
+/**
+ * [setCurPos description]
+ * @param y [description]
+ * @param x [description]
+ */
 void setCurPos(int y, int x);
 //移动光标的位置
+/**
+ * [moveCursor description]
+ * @param y [description]
+ * @param x [description]
+ */
 void moveCursor(int y, int x);
 //检测每一步的结果
+/**
+ * [checkResult description]
+ * @param  y [description]
+ * @param  x [description]
+ * @return   [description]
+ */
 bool checkResult(int y, int x);
 //输出游戏界面
+/**
+ * [printMap description]
+ */
 void printMap();
 //游戏退出后的“动画”
+/**
+ * [gameOver description]
+ * @param str [description]
+ */
 void gameOver(char *str);
+
 //删除窗口中一行的缓冲
+/**
+ * [delLine description]
+ * @param y [description]
+ */
 void delLine(int y);
