@@ -6,9 +6,9 @@
  ************************************************************************/
 
 /*********************************
-*   c语言命令行+方向键简易版扫雷
-*   运行环境：Windows7-64bit
-*   编译环境：Codeblocks-16.01
+*   Fakemine by C on Windows
+*   Execute Environment锛歐indows7-64bit
+*   Complier锛欳odeblocks-16.01
 *********************************/
 
 #include "fakemine.h"

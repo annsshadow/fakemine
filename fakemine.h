@@ -67,46 +67,47 @@ void setColor(unsigned short color);
  * [welcomeToMyGame description]
  */
 void welcomeToMyGame();
-//游戏地图初始化
+
+
 /**
- * [gameInitailize description]
+ * [gameInitailize set the maps + mine + cursor]
  */
 void gameInitailize();
-//以某格子为中心计算惊天雷数量
+
 /**
- * [countMines description]
+ * [countMines count how many mines among every position ]
  */
 void countMines();
-//获取键盘的输入
+
 /**
- * [keyBoardInput description]
+ * [keyBoardInput get the keyboard and judge]
  */
 void keyBoardInput();
-//指定光标的位置
+
 /**
- * [setCurPos description]
- * @param y [description]
- * @param x [description]
+ * [setCurPos set the current cursor for playing window]
+ * @param y [coordinate Y]
+ * @param x [coordinate X]
  */
 void setCurPos(int y, int x);
-//移动光标的位置
+
 /**
- * [moveCursor description]
- * @param y [description]
- * @param x [description]
+ * [moveCursor move and record the cursor position]
+ * @param y [coordinate Y]
+ * @param x [coordinate X]
  */
 void moveCursor(int y, int x);
-//检测每一步的结果
+
 /**
- * [checkResult description]
- * @param  y [description]
- * @param  x [description]
- * @return   [description]
+ * [checkResult check the result for every step]
+ * @param  y [coordinate Y]
+ * @param  x [coordinate X]
+ * @return   [true:gameover, false:keep going]
  */
 bool checkResult(int y, int x);
-//输出游戏界面
+
 /**
- * [printMap description]
+ * [printMap print the gudie and the map]
  */
 void printMap();
 //游戏退出后的“动画”
@@ -116,9 +117,8 @@ void printMap();
  */
 void gameOver(char *str);
 
-//删除窗口中一行的缓冲
 /**
- * [delLine description]
- * @param y [description]
+ * [delLine delete the buffer line for playing window]
+ * @param y [coordinate Y]
  */
 void delLine(int y);

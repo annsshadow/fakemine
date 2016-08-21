@@ -18,7 +18,7 @@ void welcomeToMyGame()
     char introductions0[] = "FakeMine";
     char introductions1[] = "--";
     char introductions2[] = "Version 2.0";
-    char introductions3[] = "Author：shadowwen-annsshadow，thank you ╮(￣▽￣)╭";
+    char introductions3[] = "Author：shadowwen-annsshadow";
 
     //控制台窗口默认大小是80*25，所以能达到最大的位置是[79,24]
     for(i = 0; i <= 5; ++i)
@@ -69,10 +69,10 @@ void welcomeToMyGame()
     }
 
     Sleep(500);
-    char help0[] = "动啊：←↑↓→╮(╯▽╰)╭";
-    char help1[] = "点击啊：Space / Enter (ΘェΘ)";
-    char help2[] = "不玩啦：Esc (＞﹏＜)";
-    char help3[] = "<<愿你玩的开心 _(:з」∠)_>>";
+    char help0[] = "Move by Direction Key : left,up,down,right";
+    char help1[] = "Click : Space / Enter";
+    char help2[] = "Quit : Esc";
+    char help3[] = "<<Hope you have fun~>>";
     setCurPos(14, (80 - strlen(help0)) / 2);
     setColor(14);
     printf("%s", help0);

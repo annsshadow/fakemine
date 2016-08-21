@@ -5,107 +5,119 @@
 	> Created Time: Thu 11 Aug 2016 09:34:16 AM HKT
  ************************************************************************/
 
+/**
+* [gameInitailize set the maps + mine + cursor]
+*/
 void gameInitailize()
 {
-    int i = 0, j = 0;
+    int row_index = 0, column_index = 0;
     int allMines = ALL_MINES;
-    //ÉèÖÃËæ»úÖµ
+    //set the random seed
     srand((unsigned int)time(NULL));
 
-    //À×ÇøµØÍ¼³õÊ¼»¯
-    for(i = 0; i < ROW; ++i)
+    //initial the mine map
+    for(row_index = 0; row_index < ROW; ++row_index)
     {
-        for(j = 0; j < COLUMN; ++j)
+        for(column_index = 0; column_index < COLUMN; ++column_index)
         {
-            minesMap[i][j].beCovered = true;
-            minesMap[i][j].minesNum = 0;
+            minesMap[row_index][column_index].beCovered = true;
+            minesMap[row_index][column_index].minesNum = 0;
         }
     }
 
-    //·ÅÖÃ¾ªÌìÀ×£¡
+    //set the mine randomly
     while(allMines)
     {
-        i = rand() % ROW;
-        j = rand() % COLUMN;
+        row_index = rand() % ROW;
+        column_index = rand() % COLUMN;
 
-        if(minesMap[i][j].minesNum == 0)
+        if(minesMap[row_index][column_index].minesNum == 0)
         {
-            //Õâ¸ö¡®-1¡¯¾Í×÷ÎªÅÐ¶Ï¾ªÌìÀ×µÄÒÀ¾ÝÁË
-            minesMap[i][j].minesNum = -1;
+            //set '-1' means there is a mine under this location
+            minesMap[row_index][column_index].minesNum = -1;
             --allMines;
         }
     }
 
-    //¹â±êÎ»ÖÃ³õÊ¼»¯
-    for(i = 0; i < ROW; ++i)
+    //set the cursor randomly
+    for(row_index = 0; row_index < ROW; ++row_index)
     {
-        for(j = 0; j < COLUMN; ++j)
+        for(column_index = 0; column_index < COLUMN; ++column_index)
         {
-            cursorPos[i][j].x = j * 6 + 3;
-            cursorPos[i][j].y = i * 2 + 1;
+            cursorPos[row_index][column_index].x = column_index * 6 + 3;
+            cursorPos[row_index][column_index].y = row_index * 2 + 1;
         }
     }
 }
 
+/**
+ * [countMines count how many mines among every position ]
+ */
 void countMines()
 {
-    int i = 0, j = 0, m = 0, n = 0;
-    //ÒÔ¸ñ×ÓÎªÖÐÐÄÖÜÎ§µÄÀ×Êý
+    int row_index = 0, column_index = 0, row_increment = 0, column_increment = 0;
+    //the number of mine near the current position
     int minesNum = 0;
 
-    for(i = 0; i < ROW; ++i)
+    //count every position of map
+    for(row_index = 0; row_index < ROW; ++row_index)
     {
-        for(j = 0; j < COLUMN; ++j)
+        for(column_index = 0; column_index < COLUMN; ++column_index)
         {
-            //Óöµ½¾ªÌìÀ×¾Í·ÅÆúÍ³¼Æ°É
-            if(minesMap[i][j].minesNum == -1)
+            //if this position is mine, ignore
+            if(minesMap[row_index][column_index].minesNum == -1)
                 continue;
+            //reset the mine number every turn
             minesNum = 0;
-            //¾Å¹¬¸ñÂï£¬ÄÇ3´ÎºÃÁË
-            for(m = -1; m <= 1; ++m)
+            //# # #
+            //# p #
+            //# # #
+            for(row_increment = -1; row_increment <= 1; ++row_increment)
             {
-                //ÐÐÒç³öÁËÃ»£¬²»ÄÜËãÃ»ÓÐµÄÅ¶
-                if(i + m < 0 || i + m >= ROW)
+                //pretend row overflow
+                if(row_index + row_increment < 0 || row_index + row_increment >= ROW)
                 {
                     continue;
                 }
 
-                for(n = -1; n <= 1; ++n)
+                for(column_increment = -1; column_increment <= 1; ++column_increment)
                 {
-                    //Õâ´Î¾ÍÊÇ¿´ÁÐÒç³öÁËÃ»
-                    if(j + n < 0 || j + n >= COLUMN)
+                    //pretend column overflow
+                    if(column_index + column_increment < 0 || column_index + column_increment >= COLUMN)
                     {
                         continue;
                     }
-                    //ÖÜ±ßÓÐ¾ªÌìÀ×¸Ï½ô¼ÓÆðÀ´
-                    if(minesMap[i + m][j + n].minesNum == -1)
+                    //count the mine number
+                    if(minesMap[row_index + row_increment][column_index + column_increment].minesNum == -1)
                     {
                         ++minesNum;
                     }
                 }
             }
-            minesMap[i][j].minesNum = minesNum;
+            minesMap[row_index][column_index].minesNum = minesNum;
         }
     }
 }
 
+/**
+ * [keyBoardInput get the keyboard and judge]
+ * there are two bytes for each direction
+ * first byte:ASCII 0x00e0 224
+ * second byte:
+ * up:0x0048 72
+ * down:0x0050 80
+ * left:0x012b 75
+ * right:0x012d 77
+ */
 void keyBoardInput()
 {
     bool lose;
+    //get the first byte for each direction
     int key1 = getch();
-
-    /*****************************
-    ²âÊÔÖ®ºó²ÅÖªµÀ·½Ïò¼üÁ½¸ö×Ö½Ú
-    µÚÒ»¸ö×Ö½ÚASCII 0x00e0 224
-    µÚ¶þ¸ö×Ö½Ú·Ö±ðÊÇ£º
-    ÉÏ£º0x0048 72
-    ÏÂ£º0x0050 80
-    ×ó£º0x012b 75
-    ÓÒ£º0x012d 77
-    *****************************/
 
     if(key1 == 224)
     {
+        //get the second byte for each direction
         int key2 = getch();
 
         switch(key2)
@@ -130,6 +142,7 @@ void keyBoardInput()
             break;
         }
     }
+    //for other control key info
     else
     {
         switch(key1)
@@ -143,8 +156,8 @@ void keyBoardInput()
             if(lose)
             {
                 setColor(13);
-                printf("|              ÚÀÓ´,»¹²îÒ»µãµãÅ¶£¡ ¨i©n¨i                   |\n");
-                printf("|                 °´\"r\"ÖØÍæ£¬Esc²»ÍæÀ²¡£                    |\n");
+                printf("|              Unfortunately almost you can win                   |\n");
+                printf("|       Press \"r\" to play again or \"Esc\" to quit                |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
                 Sleep(1000);
@@ -152,27 +165,27 @@ void keyBoardInput()
 
                 if(key3 == 'r' || key3 == 'R')
                 {
-                    //ÖØÀ´£¬¸úmainÖÐ¹ý³ÌÊÇÒ»ÑùµÄ
+                    //reset the game just like the "main"
                     setColor(10);
                     gameInitailize();
                     countMines();
                     printMap();
                 }
             }
-            //Ê£ÓàµÄ¸ñ×Ó±ÈÀ×»¹Òª¶à£¬¿ÉÒÔ¼ÌÐøÍæ
+            //if the left blocks number is more than the left mines, go on
             else if(leftBlocksNum > ALL_MINES)
             {
                 setColor(13);
-                printf("|                    °¥Ó´£¬Í¦²»´íÅ¶~ (£þ0 £þ)               |\n");
+                printf("|                    Good job~Keep going               |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
             }
-            //À´µ½ÕâÄãÒÑ¾­Ó®ÁË
+            //now you win
             else
             {
                 setColor(13);
-                printf("|                    Ó´£¬¹§Ï²ÄãÓ®ÁË(/¨R¨Œ¨Q/)               |\n");
-                printf("|                  °´\"r\"ÖØÍæ£¬Esc¾Í²»ÍæÀ²¡£                 |\n");
+                printf("|                    Congratulations! You win!               |\n");
+                printf("|       Press \"r\" to play again or \"Esc\" to quit               |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
                 Sleep(1000);
@@ -191,7 +204,7 @@ void keyBoardInput()
 
         case ESC:
             system("cls");
-            gameOver("\t\t\tÀ²À²À²~ºÜ¶ººÜ³¶°É~×îºó¸ÐÐ»ÄãµÄÍæË£Ñ½£¨¨R§¥¨Q£©\n\n\n\n\n\n\n\n");
+            gameOver("\t\t\tIs it funny? Whatever, thank you for your playing\n\n\n\n\n\n\n\n");
 
         default:
             break;
@@ -199,20 +212,29 @@ void keyBoardInput()
     }
 }
 
-
+/**
+ * [setCurPos set the current cursor for playing window]
+ * @param y [coordinate Y]
+ * @param x [coordinate X]
+ */
 void setCurPos(int y, int x)
 {
-    //ÔÚ´°¿Ú»º³åÖÐ¶¨ÒåÃ¿¸öÎ»ÖÃµÄ×´Ì¬
+    //set current position for playing window
     COORD currentPosition;
     currentPosition.Y = y;
     currentPosition.X = x;
-    //ËùÒÔÏÖÔÚµÄÎ»ÖÃÊÇÔÚ{y,x}
+    //so the cursor is {y,x} now
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), currentPosition);
 }
 
+/**
+ * [moveCursor move and record the cursor position]
+ * @param y [coordinate Y]
+ * @param x [coordinate X]
+ */
 void moveCursor(int y, int x)
 {
-    //ÏÞ¶¨ÄÜ×ßµÄµØ·½
+    //pretend overflow
     if((x >= 0 && x < COLUMN) && (y >= 0 && y < ROW))
     {
         setCurPos(cursorPos[y][x].y, cursorPos[y][x].x);
@@ -221,53 +243,61 @@ void moveCursor(int y, int x)
     }
 }
 
+/**
+ * [checkResult check the result for every step]
+ * @param  y [coordinate Y]
+ * @param  x [coordinate X]
+ * @return   [true:gameover, false:keep going]
+ */
 bool checkResult(int y, int x)
 {
-    int i = 0, j = 0;
+    int row_increment = 0, column_increment = 0;
 
-    //¼ì²âÓÐÃ»ÓÐÒç³öµØÍ¼ÁË
+    //pretend overflow
     if(x < 0 || x >= COLUMN || y < 0 || y >= ROW)
     {
         return false;
     }
 
-    //¾ÍÊÇÄãÁË£¡±»Ñ¡ÖÐµÄ¸ñ×Ó£¡
+    //make this block be open
     minesMap[y][x].beCovered = false;
 
-    //±»¾ªÌìÀ×Õ¨ÁË
+    //if there is a mine under this block
     if(minesMap[y][x].minesNum == -1)
     {
         minesMap[y][x].minesNum = 9;
         return true;
     }
 
-    //Èç¹ûÃ»ÓÐÀ×£¬¾Íµ±×÷¿Õ¸ñ°É
+    //if there is no mine under this block,just keep going
     if(minesMap[y][x].minesNum > 0 && minesMap[y][x].minesNum < 9)
     {
         return false;
     }
 
-    //¾Å¹¬¸ñ£¬3x3¿©
-    for(i = -1; i <= 1; ++i)
+    //# # #
+    //# p #
+    //# # #
+    for(row_increment = -1; row_increment <= 1; ++row_increment)
     {
-        //¼ì²éÒ»ÏÂÔÚÕâÒ»ÐÐÒç³öÁËÃ»°É
-        if(y + i < 0 || y + i >= ROW)
+        //pretend row overflow
+        if(y + row_increment < 0 || y + row_increment >= ROW)
         {
             continue;
         }
 
-        for(j = -1; j <= 1; ++j)
+        for(column_increment = -1; column_increment <= 1; ++column_increment)
         {
-            //Õâ´Î¾Íµ½ÁÐÁË°É
-            if(x + j < 0 || x + j >= COLUMN)
+            //pretend column overflow
+            if(x + column_increment < 0 || x + column_increment >= COLUMN)
             {
                 continue;
             }
-            //Èç¹ûÏÂÒ»¸öÊÇÃ»¿ª¹ýµÄ£¬¾Í¼ì²éËü°É
-            if(minesMap[y + i][x + j].beCovered)
+            //if the block haven't check, do it
+            if(minesMap[y + row_increment][x + column_increment].beCovered)
             {
-                minesMap[y + i][x + j].beCovered = false;
-                checkResult(y + i, x + j);
+                minesMap[y + row_increment][x + column_increment].beCovered = false;
+                checkResult(y + row_increment, x + column_increment);
             }
         }
     }
@@ -275,15 +305,19 @@ bool checkResult(int y, int x)
     return false;
 }
 
+/**
+ * [printMap print the gudie and the map]
+ */
 void printMap()
 {
     system("cls");
-    char help0[] = "¡û¡ü¡ý¡ú";
-    char help1[] = "¶¯°¡";
+    char help0[] = "Direction Key: left,up,down,right";
+    char help1[] = "Move";
     char help2[] = "Space / Enter";
-    char help3[] = "µã»÷°¡";
-    char help4[] = "Esc ²»ÍæÀ²";
-    //ÒòÎªÒªÊä³öÌáÊ¾£¬ËùÒÔµØÍ¼²»ÄÜÌ«´óÁË£¬10x10¾Í²î²»¶àÁË
+    char help3[] = "Click";
+    char help4[] = "Esc : to quit";
+    //the map should not be too big, because need to print the guide
+    //10 * 10 is ok
     setColor(14);
     setCurPos(4, 62);
     printf("%s", help0);
@@ -301,7 +335,7 @@ void printMap()
     int i = 0, j = 0, k = 0;
     leftBlocksNum = 0;
     setColor(11);
-    printf("[¿ª]--");
+    printf("[f]--");
     setColor(10);
 
     for(k = 1; k < COLUMN - 1; ++k)
@@ -309,7 +343,7 @@ void printMap()
         printf("+-----");
     }
     setColor(11);
-    printf("+--[ÐÄ]\n");
+    printf("+--[a]\n");
     setColor(10);
 
     for(i = 0; i < ROW; ++i)
@@ -319,8 +353,10 @@ void printMap()
             if(minesMap[i][j].beCovered)
             {
                 ++leftBlocksNum;
-                //Õâ¸öÊä³öµÄ¾ÍÊÇ¸ñ×Ó±»¸²¸ÇµÄÊ±ºòÊä³öµÄÍ¼ÐÎ£¬¿ÉÒÔ»»³É1-6ÊÔÊÔ
-                //1-4ÊÇÕý·½ÐÎµÄ4¸ö½Ç£¬5-6ÊÇË«ÊúÏßºÍË«ºáÏß
+                //this is how the block should be look like when it is covered
+                //1-4 is every corner for a square
+                //5 is double vertical line
+                //6 is double horizontal line
                 printf("|  %c  ", 3);
             }
             else if(minesMap[i][j].minesNum == -1 || minesMap[i][j].minesNum == 9)
@@ -350,7 +386,7 @@ void printMap()
         }
     }
     setColor(11);
-    printf("[¾Í]--");
+    printf("[k]--");
     setColor(10);
 
     for(k = 1; k < COLUMN - 1; ++k)
@@ -358,27 +394,32 @@ void printMap()
         printf("+-----");
     }
     setColor(11);
-    printf("+--[ºÃ]\n");
+    printf("+--[e]\n");
     setColor(10);
 }
 
+/**
+ * [delLine delete the buffer line for playing window]
+ * @param y [coordinate Y]
+ */
 void delLine(int y)
 {
-    HANDLE hOutput;
-    //´°¿Ú»º´æÐÅÏ¢
-    CONSOLE_SCREEN_BUFFER_INFO sbi;
-    DWORD len, nw;
-    //ÓÃMSDNÉÏµÄTCHARÀàÐÍ¹òÁË£¬»»³Échar¾ÍºÃ
+    HANDLE handle_output;
+
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+    DWORD length, nw;
+    //TCHAR couldn't use on MSDN, so use char
     char fillchar = ' ';
-    //¶¨Î»¹â±ê
+    //set the start position of cursor where want to delete
     COORD startPosition = {0, y};
-    //»ñÈ¡Êä³ö¾ä±ú
-    hOutput = GetStdHandle(STD_OUTPUT_HANDLE);
-    //»ñÈ¡´°¿Ú»º³åÖÐµÄÐÅÏ¢
-    GetConsoleScreenBufferInfo(hOutput, &sbi);
-    //´°¿Ú»º³åµÄÎ»ÖÃ£¬ÕâÀïÈ¡µÃXÖµ
-    len = sbi.dwSize.X;
-    //´ÓÌØ¶¨µÄÎ»ÖÃÓÃÌØ¶¨µÄ×Ö·ûÈ¥Ìî³ä´°¿ÚµÄ»º³åÌØ¶¨´ÎÊý
-    //³É¹¦·µ»Ø·Ç0Öµ£¬Ò»°ã¶¼³É¹¦£¬¾Í²»ÅÐ¶ÏÁË
-    FillConsoleOutputCharacter(hOutput, fillchar, len, startPosition, &nw);
+    //get the output handle
+    handle_output = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    GetConsoleScreenBufferInfo(handle_output, &csbi);
+    //the position of window buffer, which is X
+    length = csbi.dwSize.X;
+    //use character to fill with window buffer by some times from specific position
+    //success : not zero, actually it will success so just do it without judge
+    FillConsoleOutputCharacter(handle_output, fillchar, length, startPosition, &nw);
 }
