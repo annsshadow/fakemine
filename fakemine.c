@@ -5,11 +5,11 @@
 	> Created Time: Thu 11 Aug 2016 09:32:39 AM HKT
  ************************************************************************/
 
-/*********************************
+/**************************************
 *   Fakemine by C on Windows
 *   Execute Environment：Windows7-64bit
 *   Complier：Codeblocks-16.01
-*********************************/
+**************************************/
 
 #include "fakemine.h"
 #include "fakesetting.h"

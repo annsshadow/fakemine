@@ -5,15 +5,14 @@
 	> Created Time: Thu 11 Aug 2016 09:33:52 AM HKT
  ************************************************************************/
 
-//ÓÃµ½µÄ¶¼µ¼½øÈ¥°É
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
 #include <time.h>
 #include <windows.h>
 
-//¶¨Òå¸÷ÖÖÅĞ¶Ï×´Ì¬µÄASCIIÂë
-//MINEÊÇ¶¨Òå·­¿ª¸ñ×ÓÖĞµÄ¡®*¡¯ºÅ
+//define the ASCII for each action or something
+//MINE : is â€˜*â€™
 #define MINE            42
 #define ESC             27
 #define ENTER           13
@@ -23,48 +22,52 @@
 #define LEFT            75
 #define RIGHT           77
 
-//¶¨ÒåÀàĞÍ×´Ì¬£¬·½±ãºóĞøÅĞ¶Ï
+//define the condition
 #define bool int
 #define true 1
 #define false 0
+
+//define the map size and the number of all mines
 #define ROW             10
 #define COLUMN          10
-#define ALL_MINES     15
+#define ALL_MINES     10
 
-//µ±Ç°Î»ÖÃµÄ½á¹¹Ìå
+//the current position of cursor
 typedef struct currentPosition_struct
 {
     int x;
     int y;
 } currentPosition;
 
-//Ã¿Ò»¸öĞ¡¸ñµÄ½á¹¹Ìå
+//for each block
 typedef struct blockCondition_struct
 {
-    //ÊÇ·ñ±»¸²¸ÇÁË
+    //whether is it cover or has been open
     bool beCovered;
-    //ÒÔËüÎªÖĞĞÄÖÜÎ§µÄÀ×Êı
+    //how many mines among itself
     int minesNum;
 } blockCondition;
 
-//¹â±êµÄÎ»ÖÃÊı×é
+//the array for each position of cursor
 currentPosition cursorPos[ROW][COLUMN];
-//À×ÇøµØÍ¼µÄÊı×é
+
+//the array for how mines distribute on map
 blockCondition minesMap[ROW][COLUMN];
-//Ê£ÏÂµÄ¸ñ×ÓÊı
+
+//how many block have left
 int leftBlocksNum = ROW * COLUMN;
-//¹â±êÔÚ¹â±êÎ»ÖÃ¡¢À×ÇøµØÍ¼ÖĞµÄÏÂ±ê
+
+//the coordinate of cursor on cursorPosition and minesMap
 int index_x = 0, index_y = 0;
 
-//ÉèÖÃ´°¿ÚÇ°ºó±³¾°É«
 /**
- * [setColor description]
- * @param color [description]
+ * [setColor set the console window color]
+ * @param color [first digital is for foreground color,second digital is background color]
  */
 void setColor(unsigned short color);
-//¿ªÍ·µÄ»¶Ó­¡°¶¯»­¡±
+
 /**
- * [welcomeToMyGame description]
+ * [welcomeToMyGame the fake "flash" welcome]
  */
 void welcomeToMyGame();
 
@@ -110,15 +113,15 @@ bool checkResult(int y, int x);
  * [printMap print the gudie and the map]
  */
 void printMap();
-//ÓÎÏ·ÍË³öºóµÄ¡°¶¯»­¡±
+
 /**
- * [gameOver description]
- * @param str [description]
+ * [gameOver print the string one by one and exit]
+ * @param str [point to string]
  */
 void gameOver(char *str);
 
 /**
- * [delLine delete the buffer line for playing window]
+ * [deleteLine delete the buffer line for playing window]
  * @param y [coordinate Y]
  */
-void delLine(int y);
+void deleteLine(int y);

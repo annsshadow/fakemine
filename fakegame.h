@@ -156,8 +156,8 @@ void keyBoardInput()
             if(lose)
             {
                 setColor(13);
-                printf("|              Unfortunately almost you can win                   |\n");
-                printf("|       Press \"r\" to play again or \"Esc\" to quit                |\n");
+                printf("|             Unfortunately almost you can win              |\n");
+                printf("|        Press \"r\" to play again or \"Esc\" to quit           |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
                 Sleep(1000);
@@ -176,7 +176,7 @@ void keyBoardInput()
             else if(leftBlocksNum > ALL_MINES)
             {
                 setColor(13);
-                printf("|                    Good job~Keep going               |\n");
+                printf("|                      Good job~Keep going                  |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
             }
@@ -184,8 +184,8 @@ void keyBoardInput()
             else
             {
                 setColor(13);
-                printf("|                    Congratulations! You win!               |\n");
-                printf("|       Press \"r\" to play again or \"Esc\" to quit               |\n");
+                printf("|                   Congratulations! You win!               |\n");
+                printf("|       Press \"r\" to play again or \"Esc\" to quit            |\n");
                 printf("[%c]-------------------------------------------------------[%c]\n", MINE, MINE);
                 setColor(10);
                 Sleep(1000);
@@ -335,7 +335,7 @@ void printMap()
     int i = 0, j = 0, k = 0;
     leftBlocksNum = 0;
     setColor(11);
-    printf("[f]--");
+    printf("[f]---");
     setColor(10);
 
     for(k = 1; k < COLUMN - 1; ++k)
@@ -343,7 +343,7 @@ void printMap()
         printf("+-----");
     }
     setColor(11);
-    printf("+--[a]\n");
+    printf("+---[a]\n");
     setColor(10);
 
     for(i = 0; i < ROW; ++i)
@@ -386,7 +386,7 @@ void printMap()
         }
     }
     setColor(11);
-    printf("[k]--");
+    printf("[k]---");
     setColor(10);
 
     for(k = 1; k < COLUMN - 1; ++k)
@@ -394,15 +394,15 @@ void printMap()
         printf("+-----");
     }
     setColor(11);
-    printf("+--[e]\n");
+    printf("+---[e]\n");
     setColor(10);
 }
 
 /**
- * [delLine delete the buffer line for playing window]
+ * [deleteLine delete the buffer line for playing window]
  * @param y [coordinate Y]
  */
-void delLine(int y)
+void deleteLine(int y)
 {
     HANDLE handle_output;
 

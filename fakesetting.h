@@ -5,13 +5,20 @@
 	> Created Time: Thu 11 Aug 2016 09:34:08 AM HKT
  ************************************************************************/
 
+/**
+* [setColor set the console window color]
+* @param color [first digital is for foreground color,second digital is background color]
+*/
 void setColor(unsigned short color)
 {
-    HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-    //对设置之后的输出有效
-    SetConsoleTextAttribute(hCon, color);
+    HANDLE handle_control = GetStdHandle(STD_OUTPUT_HANDLE);
+    //useful for later actions after set
+    SetConsoleTextAttribute(handle_control, color);
 };
 
+/**
+ * [welcomeToMyGame the fake "flash" welcome]
+ */
 void welcomeToMyGame()
 {
     int i = 0;
@@ -20,7 +27,8 @@ void welcomeToMyGame()
     char introductions2[] = "Version 2.0";
     char introductions3[] = "Author：shadowwen-annsshadow";
 
-    //控制台窗口默认大小是80*25，所以能达到最大的位置是[79,24]
+    //the default size of console window is 80 * 25
+    //so how far we can reach is [79,24]
     for(i = 0; i <= 5; ++i)
     {
         //每次输出之前都清屏，就会有看起来是动的效果
@@ -49,7 +57,7 @@ void welcomeToMyGame()
         //要删除这一行缓冲的原因：
         //上一次循环的输出会影响到下一次，如输出VVVVVVVVVVersion1.0
         //换成中文就不会，中文要两个字节才能显示完整呀
-        delLine(9);
+        deleteLine(9);
         //这里就会有闪闪发亮的效果哦
         Sleep(10);
         setCurPos(9, i);
@@ -64,7 +72,7 @@ void welcomeToMyGame()
         printf("%s", introductions3);
         Sleep(20);
         //删除上一次的缓冲，不加1的话最后一行就会残留，其它都不见了
-        delLine(i + 1);
+        deleteLine(i + 1);
         Sleep(50);
     }
 
@@ -86,6 +94,10 @@ void welcomeToMyGame()
     getch();
 }
 
+/**
+ * [gameOver print the string one by one and exit]
+ * @param str [point to string]
+ */
 void gameOver(char *str)
 {
     setColor(12);
@@ -95,13 +107,12 @@ void gameOver(char *str)
 
     do
     {
-        //逐字输出
+        //print the string one by one
         printf("%c", str[i]);
         Sleep(60);
     }
     while(str[i++]);
     setColor(15);
     system("pause");
-    //随意终止程序并返回给OS，0是正常的
     exit(0);
 }
