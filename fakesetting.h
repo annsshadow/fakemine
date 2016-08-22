@@ -31,19 +31,19 @@ void welcomeToMyGame()
     //so how far we can reach is [79,24]
     for(i = 0; i <= 5; ++i)
     {
-        //每次输出之前都清屏，就会有看起来是动的效果
+        //before each print, clear the screen, so can see the dynamic effect
         system("cls");
-        //纵坐标不断加，形成向下效果
+        //increase coordinate Y every time, so can see it is falling
         setCurPos(i, (80 - strlen(introductions0)) / 2);
         printf("%s", introductions0);
-        //缓冲一下，太快了看不到呢
+        //avoid too fast to see
         Sleep(50);
     }
 
-    //为了对称，从边边78开始到中间39好了
+    //for symmetry, from edge 78 to middle 39
     for(i = 78; i >= 39; --i)
     {
-        //上面用了5行了，大于它吧
+        //because it has been used 5 lines before, just more than it
         setCurPos(7, i);
         printf("%s", introductions1);
         setCurPos(7, 78 - i);
@@ -51,27 +51,26 @@ void welcomeToMyGame()
         Sleep(40);
     }
 
-    //从左边一步步进入屏幕中间
+    //from left side to middle step by step
     for(i = 0; i <= (80 - strlen(introductions2)) / 2; ++i)
     {
-        //要删除这一行缓冲的原因：
-        //上一次循环的输出会影响到下一次，如输出VVVVVVVVVVersion1.0
-        //换成中文就不会，中文要两个字节才能显示完整呀
+        //the last output will effect this time, like VVVVVVVVVVersion2.0
+        //but if print chinese will not effect, so delete the last line
         deleteLine(9);
-        //这里就会有闪闪发亮的效果哦
+        //this can be shiny by sleep
         Sleep(10);
         setCurPos(9, i);
         printf("%s", introductions2);
         Sleep(50);
     }
 
-    //从底部进入
+    //from bottom to middle
     for(i = 24; i >= 12; --i)
     {
         setCurPos(i, (80 - strlen(introductions3)) / 2);
         printf("%s", introductions3);
         Sleep(20);
-        //删除上一次的缓冲，不加1的话最后一行就会残留，其它都不见了
+        //if don't +1, the final line will remain and others disappear
         deleteLine(i + 1);
         Sleep(50);
     }
